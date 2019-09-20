@@ -128,7 +128,7 @@
 				<extensions>true</extensions>
 				<configuration>
 					<instructions>
-
+                                                <_noee>true</_noee>
 						<Import-Package>org.osgi.framework,br.cin.ufpe.nlp.api.tokenization,*;resolution:=optional</Import-Package>
  						<Export-Package></Export-Package>
 						<Private-Package>br.cin.ufpe.nlp.tokenizers.*,br.cin.ufpe.nlp.annotations.*</Private-Package>
