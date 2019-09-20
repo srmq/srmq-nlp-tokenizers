@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
+import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.web.client.RestTemplate;
 
 import br.cin.ufpe.nlp.annotations.SuperSenseAnnotation;
@@ -28,6 +29,7 @@ public class MultipleAnnotationTokenizer extends BaseAnnotationTokenizer<Annotat
 		implements Tokenizer<AnnotatedToken> {
 
 	private static ThreadLocal<StanfordCoreNLP> pipeline = null;
+	private static final int timeout = 5000; 
 	
 	private String superSenseServerURL = "http://localhost:8081/supersenses/";
 	
@@ -72,6 +74,12 @@ public class MultipleAnnotationTokenizer extends BaseAnnotationTokenizer<Annotat
 	        doc.addSentence(annotSentence);
 		}
 		RestTemplate restTemplate = new RestTemplate();
+		restTemplate.setRequestFactory(new SimpleClientHttpRequestFactory());
+		SimpleClientHttpRequestFactory rf = (SimpleClientHttpRequestFactory) restTemplate
+                .getRequestFactory();
+		rf.setReadTimeout(timeout);
+        rf.setConnectTimeout(timeout);
+		
 		AnnotatedDocument result = restTemplate.postForObject(this.superSenseServerURL, doc, AnnotatedDocument.class);
 		Map<Integer, String> offSetsToSenses = new HashMap<Integer, String>(this.tokens.size());
 		for (AnnotatedSentence sentence : result.getSentences()) {
