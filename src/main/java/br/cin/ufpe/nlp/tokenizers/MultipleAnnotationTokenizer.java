@@ -29,7 +29,7 @@ public class MultipleAnnotationTokenizer extends BaseAnnotationTokenizer<Annotat
 		implements Tokenizer<AnnotatedToken> {
 
 	private static ThreadLocal<StanfordCoreNLP> pipeline = null;
-	private static final int timeout = 5000; 
+	private static final int timeout = 30000; 
 	
 	private String superSenseServerURL = "http://localhost:8081/supersenses/";
 	
